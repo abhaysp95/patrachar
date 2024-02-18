@@ -1,4 +1,4 @@
-use actix_web::{HttpResponse, Responder, HttpServer};
+use actix_web::{HttpResponse, HttpServer, Responder};
 use std::net::TcpListener;
 
 async fn health() -> impl Responder {
@@ -6,7 +6,14 @@ async fn health() -> impl Responder {
 }
 
 async fn greet(name: String) -> impl Responder {
-    format!("Hello, {}", if name.is_empty() { String::from("World") } else { name })
+    format!(
+        "Hello, {}",
+        if name.is_empty() {
+            String::from("World")
+        } else {
+            name
+        }
+    )
 }
 
 pub fn run(listener: TcpListener) -> Result<actix_web::dev::Server, std::io::Error> {
@@ -14,7 +21,9 @@ pub fn run(listener: TcpListener) -> Result<actix_web::dev::Server, std::io::Err
         actix_web::App::new()
             .route("/health", actix_web::web::get().to(health))
             .route("/greet/{name}", actix_web::web::get().to(greet))
-    }).listen(listener)?.run();
+    })
+    .listen(listener)?
+    .run();
 
     Ok(server)
 }

@@ -15,7 +15,11 @@ async fn health_check_works() {
 
     dbg!(&addr);
     let client = reqwest::Client::new();
-    let response = client.get(format!("{}/health", &addr)).send().await.expect("Failed to send request");
+    let response = client
+        .get(format!("{}/health", &addr))
+        .send()
+        .await
+        .expect("Failed to send request");
 
     dbg!(&response);
     assert!(response.status().is_success());
