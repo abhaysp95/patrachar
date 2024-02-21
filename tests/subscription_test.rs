@@ -9,7 +9,7 @@ async fn subscribe_200_for_vaild_form_data() {
 
     let body = "name=John%20Doe&email=johndoe%40xyz.com";
     let response = client
-        .put(format!("{}/subscriptions", addr))
+        .put(format!("{}/subscription", addr))
         .body(body)
         .header("Content-Type", "x-www-form-urlencoded")
         .send()
@@ -32,7 +32,7 @@ async fn subscribe_400_when_data_is_missing() {
 
     for (body, err_msg) in bodies {
         let response = client
-            .put(format!("{}/subscriptions", addr))
+            .put(format!("{}/subscription", addr))
             .body(body)
             .header("Content-Type", "x-www-form-urlencoded")
             .send()
